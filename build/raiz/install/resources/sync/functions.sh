@@ -13,7 +13,7 @@ startMoodle(){
     echo "-> Starting container MOODLE..."
     startContainer $containerMoodleName
     ip=$(bash /opt/AVAPolos/install/scripts/get_ip.sh)
-    docker exec $containerMoodleName bash -c "echo \"$ip avapolos\" >> /etc/hosts"
+    docker exec $containerMoodleName sh -c "echo \"$ip avapolos\" >> /etc/hosts"
     echo "-----> DOCKER MOODLE | STATUS = [ON]"
 }
 
