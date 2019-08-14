@@ -1,0 +1,258 @@
+version: '2'
+
+services:
+  traefik:
+    hostname: traefik
+    image: traefik:latest
+    container_name: traefik
+    restart: always
+    domainname: avapolos
+    networks:
+      avapolos_network:
+        ipv4_address: 172.12.0.15
+      traefik_proxy:
+    ports:
+      - "80:80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=traefik"
+      - "traefik.frontend.rule=Host:traefik.avapolos"
+      - "traefik.port=8080"
+      - "traefik.docker.network=traefik_proxy"
+      - "traefik.frontend.headers.STSSeconds=315360000"
+      - "traefik.frontend.headers.browserXSSFilter=true"
+      - "traefik.frontend.headers.contentTypeNosniff=true"
+      - "traefik.frontend.headers.forceSTSHeader=true"
+      - "traefik.frontend.headers.STSIncludeSubdomains=true"
+      - "traefik.frontend.headers.STSPreload=true"
+      - "traefik.frontend.headers.frameDeny=true"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./data/traefik:/etc/traefik
+
+  hub_80:
+    container_name: hub_80
+    image: avapolos/webserver:lite
+    volumes:
+      - ./data/hub:/app/
+    networks:
+      avapolos_network:
+        ipv4_address: 172.12.0.10
+      traefik_proxy:
+    ports:
+     - "80:80"
+    environment:
+      - UID=USER
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=hub"
+      - "traefik.frontend.rule=Host:menu.avapolos"
+      - "traefik.port=80"
+      - "traefik.docker.network=traefik_proxy"
+      - "traefik.frontend.headers.STSSeconds=315360000"
+      - "traefik.frontend.headers.browserXSSFilter=true"
+      - "traefik.frontend.headers.contentTypeNosniff=true"
+      - "traefik.frontend.headers.forceSTSHeader=true"
+      - "traefik.frontend.headers.STSIncludeSubdomains=true"
+      - "traefik.frontend.headers.STSPreload=true"
+      - "traefik.frontend.headers.frameDeny=true"
+  hub_name:
+    container_name: hub_name
+    image: avapolos/webserver:lite
+    volumes:
+      - ./data/hub:/app/
+    networks:
+      avapolos_network:
+        ipv4_address: 172.12.0.11
+      traefik_proxy:
+    environment:
+      - UID=USER
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=hub"
+      - "traefik.frontend.rule=Host:menu.avapolos"
+      - "traefik.port=80"
+      - "traefik.docker.network=traefik_proxy"
+      - "traefik.frontend.headers.STSSeconds=315360000"
+      - "traefik.frontend.headers.browserXSSFilter=true"
+      - "traefik.frontend.headers.contentTypeNosniff=true"
+      - "traefik.frontend.headers.forceSTSHeader=true"
+      - "traefik.frontend.headers.STSIncludeSubdomains=true"
+      - "traefik.frontend.headers.STSPreload=true"
+      - "traefik.frontend.headers.frameDeny=true"
+
+  downloads:
+    container_name: downloads
+    image: avapolos/webserver:lite
+    volumes:
+      - ./data/downloads:/app/
+    networks:
+      avapolos_network:
+        ipv4_address: 172.12.0.12
+      traefik_proxy:
+    ports:
+      - "84:80"
+    environment:
+      - UID=USER
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=downloads"
+      - "traefik.frontend.rule=Host:downloads.avapolos"
+      - "traefik.port=80"
+      - "traefik.docker.network=traefik_proxy"
+      - "traefik.frontend.headers.STSSeconds=315360000"
+      - "traefik.frontend.headers.browserXSSFilter=true"
+      - "traefik.frontend.headers.contentTypeNosniff=true"
+      - "traefik.frontend.headers.forceSTSHeader=true"
+      - "traefik.frontend.headers.STSIncludeSubdomains=true"
+      - "traefik.frontend.headers.STSPreload=true"
+      - "traefik.frontend.headers.frameDeny=true"
+
+
+  db_moodle_ies:
+    container_name: db_moodle_ies
+    image: avapolos/postgres_bdr:master
+    environment:
+     - POSTGRES_PASSWORD=@bancoava.C4p35*&
+     - UID=USER
+    volumes:
+     - ./data/db_moodle_ies:/var/lib/postgresql/data
+    networks:
+      avapolos_network:
+        ipv4_address: 172.12.0.2
+    stop_signal: SIGINT
+    restart: unless-stopped
+
+  db_moodle_polo:
+    container_name: db_moodle_polo
+    image: avapolos/postgres_bdr:master
+    environment:
+      - POSTGRES_PASSWORD=@bancoava.C4p35*&
+      - UID=USER
+    volumes:
+     - ./data/db_moodle_polo:/var/lib/postgresql/data
+    networks:
+      avapolos_network:
+        ipv4_address: 172.12.0.3
+    stop_signal: SIGINT
+    restart: unless-stopped
+
+  db_wiki:
+    container_name: db_wiki
+    image: avapolos/postgres_bdr:master
+    environment:
+      - POSTGRES_PASSWORD=@bancoava.C4p35*&
+      - UID=USER
+    volumes:
+     - ./data/db_wiki:/var/lib/postgresql/data
+    networks:
+      avapolos_network:
+        ipv4_address: 172.12.0.6
+    stop_signal: SIGINT
+    restart: unless-stopped
+
+
+  moodle:
+    container_name: moodle
+    image: avapolos/webserver:lite
+    ports:
+      - "81:80"
+    volumes:
+      - ./data/moodle:/app/
+    networks:
+      avapolos_network:
+        ipv4_address: 172.12.0.4
+      traefik_proxy:
+    environment:
+      - UID=USER
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=moodle"
+      - "traefik.frontend.rule=Host:moodle.avapolos"
+      - "traefik.port=80"
+      - "traefik.docker.network=traefik_proxy"
+      - "traefik.frontend.passHostHeader=true"
+
+  wiki:
+    container_name: wiki
+    image: avapolos/webserver:lite
+    ports:
+      - "82:80"
+    volumes:
+      - ./data/wiki:/app/
+    networks:
+      avapolos_network:
+        ipv4_address: 172.12.0.5
+      traefik_proxy:
+    environment:
+      - UID=USER
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=wiki"
+      - "traefik.frontend.rule=Host:wiki.avapolos"
+      - "traefik.port=80"
+      - "traefik.docker.network=traefik_proxy"
+      - "traefik.frontend.headers.STSSeconds=315360000"
+      - "traefik.frontend.headers.browserXSSFilter=true"
+      - "traefik.frontend.headers.contentTypeNosniff=true"
+      - "traefik.frontend.headers.forceSTSHeader=true"
+      - "traefik.frontend.headers.STSIncludeSubdomains=true"
+      - "traefik.frontend.headers.STSPreload=true"
+      - "traefik.frontend.headers.frameDeny=true"
+
+  educapes:
+    container_name: educapes
+    image: brendowdf/dspace-educapes:latest
+    volumes:
+     - DSPACEASSETSTORE:/dspace/assetstore 
+     - DSPACEDIRSOLR:/dspace/solr/search/data
+    networks:
+      avapolos_network:
+        ipv4_address: 172.12.0.8
+      traefik_proxy:
+    stop_signal: SIGINT
+    restart: unless-stopped
+    ports:
+      - "83:8080"
+    depends_on:
+      - dspacedb
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=educapes"
+      - "traefik.frontend.rule=Host:educapes.avapolos"  
+      - "traefik.port=8080"
+      - "traefik.docker.network=traefik_proxy"
+      - "traefik.frontend.headers.STSSeconds=315360000"
+      - "traefik.frontend.headers.browserXSSFilter=true"
+      - "traefik.frontend.headers.contentTypeNosniff=true"
+      - "traefik.frontend.headers.forceSTSHeader=true"
+      - "traefik.frontend.headers.STSIncludeSubdomains=true"
+      - "traefik.frontend.headers.STSPreload=true"
+      - "traefik.frontend.headers.frameDeny=true"    
+  
+  dspacedb: 
+    container_name: dspacedb
+    image: brendowdf/dspace-postgres-educapes:latest
+    volumes:
+     - DSPACEDB:/var/lib/postgresql/data
+    networks:
+      avapolos_network:
+        ipv4_address: 172.12.0.7
+    stop_signal: SIGINT
+    restart: unless-stopped
+
+networks:
+  avapolos_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.12.0.0/16
+          gateway: 172.12.0.1
+  traefik_proxy:
+    external: true

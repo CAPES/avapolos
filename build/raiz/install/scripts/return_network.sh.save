@@ -1,0 +1,53 @@
+#!/bin/bash
+#-------------------------------------------#
+# AVAPolos - Script de configuração de rede #
+#-------------------------------------------#
+
+if [ "$EUID" -ne 0 ]; then
+    echo "Este script precisa ser rodado como root."
+    exit
+fi
+
+pwd=$PWD
+
+#----------------------------------------------------------
+
+echo "-----------------"
+echo "RE-Configurando Rede"
+echo "-----------------"
+
+#----------------------------------------------------------
+
+rm -rf /opt/AVAPolos/install/resources/servicos/networking/enable
+
+generateConfig() {
+  docker-compose down -d
+  #if [ -f /etc/init.d/network-manager ]; then
+    echo "Desabilitando serviço padrão de gerenciamento de redes."
+    sudo systemctl enabel NetworkManager
+    sudo systemctl start NetworkManager
+    sudo systemctl unmask NetworkManager
+  #fi
+
+  echo "Gerando backup dos perfis de conexão anteriores."
+  cd /etc/netplan/old
+  sudo cp -f *.yaml ..
+  echo "Ativando netplan"
+  sudo netplan apply
+
+  cd /lib/systemd/network
+  sudo rm -f 00-avapolos.network
+  command=$(systemctl restart systemd-networkd.service)
+  
+
+
+
+
+  #if [ $? -ne 0 ]; then
+  #  echo "Houve um erro na aplicação da configuração"
+  #  exit 2
+  #else
+  #  echo "Configurações aplicadas com sucesso."
+  #fi
+}
+
