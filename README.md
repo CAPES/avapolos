@@ -22,8 +22,11 @@
     <AVAPolos - Uma solução tecnológica que possibilita o oferecimento 
     de cursos na modalidade EaD (Educação a Distância) em locais sem 
     conectividade com a Internet, ou onde a conectividade seja limitada.>
-    Copyright (C) <2019>  <TI C3 - Centro de Ciências Computacionais / 
-    Universidade Federal do Rio Grande - FURG - Brazil>
+    Copyright (C) <2019> <DED/CAPES - Coordenação de Aperfeiçoamento de 
+    Pessoal de Nível Superior - CAPES - Brazil TI C3 - Centro de Ciências 
+    Computacionais / Universidade Federal do Rio Grande - FURG - Brazil>
+    <TI C3 - Centro de Ciências Computacionais / Universidade Federal do 
+    Rio Grande - FURG - Brazil>
 
     Este programa é um software livre: você pode redistribuí-lo e/ou
     modificá-lo sob os termos da Licença Pública Geral GNU, conforme
