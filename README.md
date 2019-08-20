@@ -50,7 +50,7 @@ mídias removíveis
 ## Guia de Desenvolvimento
 
 Para obter instruções de desenvolvimento acesse o [Manual de Desenvolvimento]
-(https://gitlab.c3.furg.br/c3furg/avapolos-source/wikis/Manual-de-Desenvolvimento). 
+(https://gitlab.c3.furg.br/c3furg/avapolos-source/wikis/Customizando-a-Instalação). 
 
 
 ## Guia de Instalação/Desinstalação
