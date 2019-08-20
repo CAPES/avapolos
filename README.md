@@ -2,7 +2,7 @@
     educational institutions to offer 'online' courses on places with no 
     Internet connection, or where it works poorly.> Copyright (C) <2019>
     <DED/CAPES - Coordenação de Aperfeiçoamento de Pessoal de Nível 
-    Superior - CAPES - Brazil TI C3 - Centro de Ciências Computacionais 
+    Superior - CAPES - Brazil> <TI C3 - Centro de Ciências Computacionais 
     / Universidade Federal do Rio Grande - FURG - Brazil>
 
     This program is free software: you can redistribute it and/or modify
@@ -23,11 +23,9 @@
     de cursos na modalidade EaD (Educação a Distância) em locais sem 
     conectividade com a Internet, ou onde a conectividade seja limitada.>
     Copyright (C) <2019> <DED/CAPES - Coordenação de Aperfeiçoamento de 
-    Pessoal de Nível Superior - CAPES - Brazil TI C3 - Centro de Ciências 
+    Pessoal de Nível Superior - CAPES - Brazil> <TI C3 - Centro de Ciências 
     Computacionais / Universidade Federal do Rio Grande - FURG - Brazil>
-    <TI C3 - Centro de Ciências Computacionais / Universidade Federal do 
-    Rio Grande - FURG - Brazil>
-
+    
     Este programa é um software livre: você pode redistribuí-lo e/ou
     modificá-lo sob os termos da Licença Pública Geral GNU, conforme
     publicado pela Free Software Foundation, seja a versão 3 da Licença
@@ -48,6 +46,12 @@ AVAPolos é uma solução tecnológica que possibilitará o oferecimento de curs
 distância sem o requisito de conexão com a Internet. Um Ambiente Virtual de 
 Aprendizagem (AVA) é criado e sincronizado usando arquivos transportados por 
 mídias removíveis
+
+## Guia de Desenvolvimento
+
+Para obter instruções de desenvolvimento acesse o [Manual de Desenvolvimento]
+(https://gitlab.c3.furg.br/c3furg/avapolos-source/wikis/Manual-de-Desenvolvimento). 
+
 
 ## Guia de Instalação/Desinstalação
 
